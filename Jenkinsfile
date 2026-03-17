@@ -5,8 +5,9 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git credentialsId: 'github-creds'
-                url 'https://github.com/MATHIVANANIGRIS/project-java.git'
+                git branch: 'main',
+                    credentialsId: 'github-creds',
+                    url: 'https://github.com/MATHIVANANIGRIS/project-java.git'
             }
         }
 
