@@ -25,6 +25,7 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
+                sh 'docker tag myapp mathivanantamil/mathi123'
                 sh 'docker push mathivanantamil/mathi123'
             }
         }
