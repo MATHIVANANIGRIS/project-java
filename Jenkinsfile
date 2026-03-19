@@ -11,7 +11,7 @@ pipeline {
             steps {
                 git branch: 'main',
                     credentialsId: 'github-creds',
-                    url: 'https://github.com/YOUR-REPO.git'
+                    url: 'https://github.com/MATHIVANANIGRIS/project-java.git'
             }
         }
 
