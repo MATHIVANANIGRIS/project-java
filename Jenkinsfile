@@ -1,17 +1,21 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE = 'mathivanantamil/mathi123'
+    }
+
     stages {
 
         stage('Clone Code') {
             steps {
                 git branch: 'main',
                     credentialsId: 'github-creds',
-                    url: 'https://github.com/MATHIVANANIGRIS/project-java.git'
+                    url: 'https://github.com/YOUR-REPO.git'
             }
         }
 
-        stage('Build Application') {
+        stage('Build WAR') {
             steps {
                 sh 'mvn clean package'
             }
@@ -19,30 +23,38 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t mathivanantamil/mathi123:latest .'
+                sh 'docker build -t myapp .'
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Push to DockerHub') {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'docker-creds',
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
+                    usernameVariable: 'mathivanan',
+                    passwordVariable: 'PASS_WORD'/
                 )]) {
                     sh '''
-                    echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                    docker push mathivanantamil/mathi123:latest
+                    echo $PASS | docker login -u mathivanantamil --password-stdin
+                    docker tag myapp mathivanantamil/mathi123
+                    docker push mathivanantamil/mathi123
                     '''
                 }
             }
         }
 
-        stage('Deploy Container') {
+        stage('Deploy to Web Server') {
             steps {
                 sh '''
-                docker rm -f myapp-container || true
-                docker run -d -p 8090:8080 --name myapp-container mathivanantamil/mathi123:latest
+                ssh -o StrictHostKeyChecking=no ubuntu@107.20.103.240 << EOF
+
+                docker pull myapp
+
+                docker rm -f myapp || true
+
+                docker run -d -p 8090:8080 --name myapp 
+
+                EOF
                 '''
             }
         }
