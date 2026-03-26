@@ -7,6 +7,7 @@ pipeline {
 
     stages {
 
+     
         stage('Clone Code') {
             steps {
                 git branch: 'main',
@@ -32,7 +33,7 @@ pipeline {
                 withCredentials([usernamePassword(
                     credentialsId: 'docker-creds',
                     usernameVariable: 'mathivanan',
-                    passwordVariable: 'PASS_WORD')
+                    passwordVariable: 'PASS_WORD')])
                 {
                     sh '''
                     echo $PASS | docker login -u mathivanantamil --password-stdin
@@ -46,7 +47,7 @@ pipeline {
         stage('Deploy to Web Server') {
             steps {
                 sh '''
-                ssh -o StrictHostKeyChecking=no ubuntu@107.20.103.240 << EOF
+                ssh -o StrictHostKeyChecking=no ubuntu@10.0.2.33 << EOF
 
                 docker pull myapp
 
@@ -59,3 +60,4 @@ pipeline {
             }
         }
     }
+}
