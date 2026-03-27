@@ -50,11 +50,11 @@ pipeline {
                 sh '''
                 ssh -o StrictHostKeyChecking=no ubuntu@10.0.2.33 << EOF
 
-                docker pull myapp
+                sudo docker pull myapp
 
-                docker rm -f myapp || true
+                sudo docker rm -f myapp || true
 
-                docker run -d -p 8090:8080 --name myapp 
+                sudo docker run -d -p 8090:8080 --name myapp 
 
                 EOF
                 '''
