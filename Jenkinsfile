@@ -48,13 +48,13 @@ pipeline {
             steps {
                 sshagent(['ssh-access']){
                 sh '''
-                ssh -o StrictHostKeyChecking=no ubuntu@10.0.2.33 <<
+                ssh -o StrictHostKeyChecking=no ubuntu@10.0.2.33 "\
 
-                sudo docker pull mathivanantamil/mathi123
+                sudo docker pull mathivanantamil/mathi123 && \
 
-                sudo docker rm -f myapp || true
+                sudo docker rm -f myapp || true && \
 
-                sudo docker run -d -p 8090:8080 --name myapp mathivanantamil/mathi123 
+                sudo docker run -d -p 8090:8080 --name myapp mathivanantamil/mathi123 " 
                 
                 '''
             }
