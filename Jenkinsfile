@@ -32,7 +32,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub-cres',
-                    usernameVariable: '$DOCKER_USER',
+                    usernameVariable: '$USER_NAME',
                     passwordVariable: 'PASS_WORD')])
                 {
                     sh '''
