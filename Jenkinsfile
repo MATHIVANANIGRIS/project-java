@@ -46,6 +46,7 @@ pipeline {
 
         stage('Deploy to Web Server') {
             steps {
+                sshagent(['ssh-access']){
                 sh '''
                 ssh -o StrictHostKeyChecking=no ubuntu@10.0.2.33 << EOF
 
@@ -60,4 +61,6 @@ pipeline {
             }
         }
     }
+}
+
 }
