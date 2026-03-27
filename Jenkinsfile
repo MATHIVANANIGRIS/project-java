@@ -36,7 +36,7 @@ pipeline {
                     passwordVariable: 'PASS_WORD')])
                 {
                     sh '''
-                    echo $PASS | docker login -u $DOCKER_USER --password-stdin
+                    echo "$PASS_WORD" | docker login -u "$USER_NAME" --password-stdin
                     docker tag myapp mathivanantamil/mathi123
                     docker push mathivanantamil/mathi123
                     '''
