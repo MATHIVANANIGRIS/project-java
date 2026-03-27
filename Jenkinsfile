@@ -32,11 +32,11 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub-cres',
-                    usernameVariable: '$USER_NAME',
+                    usernameVariable: '$mathivanantamil',
                     passwordVariable: 'PASS_WORD')])
                 {
                     sh '''
-                    echo "$PASS_WORD" | docker login -u "$USER_NAME" --password-stdin
+                    echo "$PASS_WORD" | docker login -u "$mathivanantamil" --password-stdin
                     docker tag myapp mathivanantamil/mathi123
                     docker push mathivanantamil/mathi123
                     '''
